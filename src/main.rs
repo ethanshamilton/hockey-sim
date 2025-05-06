@@ -11,7 +11,7 @@ fn main() {
 
     println!("🏒 Game Start: {} at {}!", away.name, home.name);
     println!("");
-    println!("--- {} Starting Lineups ---", home.name);
+    println!("--- {} Starting Lineup ---", home.name);
     println!("");
 
     for i in 0..5 {
@@ -24,7 +24,7 @@ fn main() {
     }
 
     println!("");
-    println!("--- {} Starting Lineups ---", away.name);
+    println!("--- {} Starting Lineup ---", away.name);
     println!("");
 
     for i in 0..5 {
