@@ -1,0 +1,6 @@
+first_name,last_name,handedness,primary_position,secondary_position,skating,passing,shooting,defense,stamina
+Sebastian,Aho,L,C,,0.9,0.9,0.8,0.8,0.8
+Taylor,Hall,L,LW,RW,0.8,0.8,0.85,0.7,0.7
+Andrei,Svechnikov,L,RW,,0.8,0.8,0.8,0.7,0.7
+Dmitri,Orlov,L,LD,RD,0.9,0.8,0.7,0.9,0.8
+Brent,Burns,R,RD,,0.8,0.8,0.9,0.9,0.9
