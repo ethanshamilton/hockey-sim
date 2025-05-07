@@ -5,6 +5,7 @@ use std::error::Error;
 
 #[derive(Debug, Deserialize)]
 pub struct PlayerCsvRow {
+    pub number: u8,
     pub first_name: String,
     pub last_name: String,
     pub skating: f32,
@@ -36,6 +37,16 @@ fn parse_handedness(h: &str) -> Result<Handedness, String> {
     }
 }
 
+// player ID is firstlast00, like alexovechkin08 -- this may fail to dedupe players
+fn generate_player_id(first_name: &str, last_name: &str, number: u8) -> String {
+    format!(
+        "{}{}{:02}",
+        first_name,
+        last_name,
+        number
+    )
+}
+
 pub fn load_team_from_csv(path: &str, team_name: &str) -> Result<Team, Box<dyn Error>> {
     let file = File::open(path)?;
     let mut rdr = csv::Reader::from_reader(file);
@@ -44,6 +55,7 @@ pub fn load_team_from_csv(path: &str, team_name: &str) -> Result<Team, Box<dyn E
 
     for (i, result) in rdr.deserialize().enumerate() {
         let row: PlayerCsvRow = result?;
+        let player_id = generate_player_id(&row.first_name, &row.last_name, row.number);
         let handedness = parse_handedness(&row.handedness)?;
         let primary_pos = parse_position(&row.primary_position)?;
         let secondary_pos = match row.secondary_position {
@@ -52,7 +64,8 @@ pub fn load_team_from_csv(path: &str, team_name: &str) -> Result<Team, Box<dyn E
         };
 
         players.push(Player {
-            id: i,
+            player_id: player_id,
+            number: row.number,
             first_name: row.first_name,
             last_name: row.last_name,
             skills: Skills {

@@ -1,3 +1,4 @@
+use std::fmt;
 use serde::{Deserialize, Serialize};
 
 ///
@@ -13,23 +14,29 @@ pub enum Position {
     RD,
 }
 
+impl fmt::Display for Position {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let s = match self {
+            Position::C => "C",
+            Position::LW => "LW",
+            Position::RW => "RW",
+            Position::LD => "LD",
+            Position::RD => "RD",
+        };
+        write!(f, "{}", s)
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Handedness {
     L,
     R,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum TeamSide {
     Home,
     Away,
-}
-
-#[derive(Debug)]
-pub enum Zone {
-    Defensive,
-    Neutral,
-    Offensive,
 }
 
 ///
@@ -38,7 +45,8 @@ pub enum Zone {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Player {
-    pub id: usize,
+    pub player_id: String,
+    pub number: u8,
     pub first_name: String,
     pub last_name: String,
     pub handedness: Handedness,
@@ -54,7 +62,7 @@ pub struct Puck {
     pub y: f32,
     pub velocity_x: f32,
     pub velocity_y: f32,
-    pub possessed_by: Option<(String, usize)>,
+    pub possessed_by: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -67,17 +75,6 @@ pub struct Rink {
     pub blue_line_right: f32,
     pub center_ice: (f32, f32),
     pub faceoff_spots: Vec<(f32, f32)>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct SimPlayer {
-    pub team: String,
-    pub player_index: usize,
-    pub x: f32,
-    pub y: f32,
-    pub speed: f32,
-    pub target_x: f32,
-    pub target_y: f32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
