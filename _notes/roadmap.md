@@ -1,7 +1,4 @@
 Core Simulation Engine
-- Add GameState struct
-- Add Puck struct with position, velocity, and possession
-- Introduce SimPlayer with position and velocity
 - Model discrete ticks (e.g. 0.1s)
 - Simulate puck movement and possession per tick
 - Add basic actions: pass, shoot, carry
